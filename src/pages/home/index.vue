@@ -3,7 +3,7 @@
 	<index-header></index-header>
 	<slider :sliders = "sliders"></slider>
 	<icons :icons="icons"></icons>
-	<scroller class="scroller"></scroller>
+	<scroller class="scroller" :sights="sights"></scroller>
 </div>
 </template>
 
@@ -25,7 +25,8 @@
 		data () {
 			return {
 				sliders: [],
-				icons: []
+				icons: [],
+				sights: []
 			}
 		},
 		computed: {
@@ -41,6 +42,7 @@
 				if(res && res.ret && res.data) {
 					res.data.sliders && (this.sliders = res.data.sliders)
 					res.data.icons && (this.icons = res.data.icons)
+					res.data.list &&(this.sights = res.data.list)
 				} else {
 					this.handleDataErr()
 				}

@@ -1,19 +1,21 @@
 <template>
-	<swiper :options="swiperOption" ref="mySwiper" class="banner-page">
-    <swiper-slide v-for="item in silders" :key="item.id">
+	 <swiper :options="swiperOption" ref="mySwiper" class="banner-page">
+    <!-- slides -->
+    <swiper-slide v-for="item of sliders" :key="item.id" >
     	<div class="banner">
-    		<img :src="item.imgUrl" alt="" class="banner-img">
+    		<img  class="banner-img":src="item.imgUrl" alt="" />
     	</div>
     </swiper-slide>
+    <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
   </swiper>
 </template>
 
 <script>
 	export default {
-  name: 'index-silder',
+  name: 'sliders',
   props: {
-    silders: Array
+    sliders: Array
   },
   data () {
     return {
@@ -28,9 +30,9 @@
 </script>
 
 <style scoped lang="stylus">
-@import '../../assets/styles/common/varibles.styl'
+
   .banner-page
-   
+    width: 100%
   	.banner
   		width: 100%
   		height: 0
@@ -44,3 +46,4 @@
 		.swiper-pagination-bullet-active
 			background: #fff
 </style>
+
