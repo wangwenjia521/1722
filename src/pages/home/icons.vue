@@ -10,7 +10,6 @@
     		</div>
     	</div>	
     </swiper-slide>
-	
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
   </swiper>
@@ -53,13 +52,13 @@
 
 <style scoped lang="stylus">
 	@import  '../../assets/styles/common/varibles.styl'
+	.icons >>> .swiper-pagination-bullet
+	 background: $bgColor
 	.icons
 	   width: 100%
-	   padding-bottom: 0.6rem
-	.icon-page
-		overflow: hidden
-		height: 0
-		padding-bottom: 2.8rem
+	   overflow: hidden
+	   height: 0
+	   padding-bottom:3.4rem
 		.icon-list
 			display:flex
 			flex-wrap: wrap

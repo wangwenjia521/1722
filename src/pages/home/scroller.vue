@@ -2,7 +2,7 @@
 <div ref="scroller">
   <div class="content">
     <div class="item" v-for="item in sights" :key="item.id">
-    	<img :src="item.imgUrl" class="item-img"/>
+    	<img v-lazy="item.imgUrl" class="item-img"/>
     	<div class="item-content">
     		<p class="item-title">{{item.title}}</p>
     		<p class="item-desc">{{item.desc}}</p>
@@ -61,9 +61,8 @@
 			font-size: 0.36rem
 			color: $enlightFontColor
 			.price-tag
-				font-size: .24rem
-				
-			price-start
+				font-size: .24rem		
+			.price-start
 				font-size: .24rem
 				color: $lightFontColor
 </style>

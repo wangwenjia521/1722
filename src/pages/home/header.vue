@@ -9,8 +9,10 @@
 				请输入城市/景点/游玩主题
 			</div>
 		</div>
-		<div class="city "><!--{{this.$store.state.city}} --> {{city}}
-		</div>
+		<router-link to="/city">
+			<div class="city "><!--{{this.$store.state.city}} --> {{city}}
+		    </div>
+		</router-link>
 	</div>
 </template>
 

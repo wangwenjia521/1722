@@ -13,7 +13,7 @@
 	import Icons from './icons'
 	import Scroller from './scroller'
 	import axios from 'axios'
-	import {mapState } from 'vuex'
+	import {mapState, mapMutations } from 'vuex'
 	export default {
 		name: 'index',
 		components: {
@@ -33,8 +33,9 @@
 			...mapState(['city'])
 		},
 		methods: {
+			...mapMutations(['changeCity']),
 			getIndexData () {
-			   axios.get('/api/index.json?city=' + this.city)
+			   axios.get('/api/index.json')
 			  .then(this.handleDataSucc.bind(this)).catch(this.handleDataError.bind(this))
 			},
 			handleDataSucc (res) {
@@ -43,6 +44,7 @@
 					res.data.sliders && (this.sliders = res.data.sliders)
 					res.data.icons && (this.icons = res.data.icons)
 					res.data.list &&(this.sights = res.data.list)
+					res.data.city &&(this.changeCity(res.data.city))
 				} else {
 					this.handleDataErr()
 				}
@@ -52,7 +54,7 @@
 			}
 			
 		},
-		mounted () {
+		created () {
 			this.getIndexData()
 		}
 	}
