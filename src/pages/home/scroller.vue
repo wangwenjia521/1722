@@ -1,6 +1,9 @@
 <template>
 <div ref="scroller">
   <div class="content">
+  	<transition name="fade">
+  		<div v-show="isLoading" class="loading">正在加载</div>
+  	</transition>
     <div class="item" v-for="item in sights" :key="item.id">
     	<img v-lazy="item.imgUrl" class="item-img"/>
     	<div class="item-content">
@@ -18,27 +21,88 @@
 </template>
 
 <script>
+	import axios from 'axios'
+	import { mapState } from 'vuex'
 	import BScroll from 'better-scroll'
 	export default {
 		name: 'scroller',
 		props: {
 			sights: Array
 		},
+		data (){
+			return {
+				isLoading: false,
+				moreSights: []
+			}
+		},
 		watch:{
-			sights () {
+			lists () {
 				this.$nextTick(() => {
 					this.scroller.refresh()
 				})			
 			}
 		},
+		computed:{
+			lists () {
+				return this.sights.concat(this.moreSights)
+			}
+		},
+		methods: {
+				createScroller () {
+					this.scroller = new BScroll(this.$refs.scroller , {
+						 probeType: 2
+					})
+				},
+				bindEvents () {
+					this.scroller.on('scroll' , this.handleScroll.bind(this))
+					this.scroller.on('scrollEnd', this.handleScrollEnd.bind(this))
+				},
+				handleScroll (e) {
+					if(e.y > 50 && !this.isLoading) {
+						this.getListInfo()
+						this.isLoading = true
+					}	
+				},
+				handleScrollEnd () {
+						this.isLoading =  false
+				},
+				getListInfo () {
+					axios.get('/api/moreSight.json?city=' + this.city).then(this.handleGetMoreSightSucc.bind(this))
+					.catch(this.handleGetMoreSightErr.bind(this))
+				},
+				handleGetMoreSightSucc(res) {
+					res && (res = res.data)
+					if(res.data) {
+						if(res.data.list) {
+							this.moreSights = this.moreSights.concat(res.data.list)
+							
+						}
+					}else {
+							this.handleGetMoreSightErr()
+					}
+				},
+				handleGetMoreSightErr (err) {
+					console.log(err)
+				}
+				
+		},
 		mounted () {
-			this.scroller = new BScroll(this.$refs.scroller)
+			this.createScroller()
+			this.bindEvents()	
 		}
 	}
 </script>
 
 <style lang="stylus" scoped>
 @import '../../assets/styles/common/varibles.styl'
+.loading
+	text-align: center
+	line-height: .8rem
+	color: $lightFontColor
+.fade-enter-active, .fade-leave-active 
+		transition: opacity .5s
+.fade-enter, .fade-leave-to 
+		opacity: 0
 .item
 	display: flex
 	padding: 0.24rem
