@@ -1,4 +1,4 @@
 export default {
 //	city: window.context.city
-city: ''
+city: '北京'
 }

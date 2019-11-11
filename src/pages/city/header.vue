@@ -19,6 +19,7 @@
 <style scoped lang="stylus">
  @import '../../assets/styles/common/varibles.styl'
 .header
+	position: relative
 	line-height: 0.88rem
 	height: 0.88rem
 	background: $bgColor

@@ -1,11 +1,12 @@
 <template>
+<div ref="wrapper">
 	<div class="list">
 		<!-- 您的位置 -->
 		<div class="area">
 			<div class="title border-topbottom">您的位置</div>
 			<div class="content">
 				<div class="button ">
-					<div class="button-text button-active">
+					<div class="button-text button-active" @click="handleCityClick(city)">
 						{{city || '上海'}}
 					</div>
 				</div>
@@ -16,7 +17,7 @@
 			<div class="title border-topbottom">热门城市</div>
 			<div class="content">
 				<div class="button"  v-for="item in hotcity" :key="item.id">
-					<div class="button-text" :class="{'button-active': item.city === city}">
+					<div class="button-text" @click="handleCityClick(item.city)" :class="{'button-active': item.city === city}" >
 						{{item.city}}
 					</div>
 				</div>
@@ -27,18 +28,17 @@
 			<div class="title border-topbottom">{{key}}</div>
 			<div class="content" >
 				<div class="content-item border-bottom" v-for="item in value" :key="item.id">
-					<div class="button-text">
+					<div class="button-text"  @click="handleCityClick(item.name)">
 						{{item.name}}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>		
-
+</div>
 </template>
-
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import BScroll from 'better-scroll'
 	export default {
 		name: 'city-list',
@@ -46,18 +46,27 @@ import BScroll from 'better-scroll'
 			list: Object,
 			hotcity: Array
 		},
-		watch: {
-			list () {
-				console.log(this.list)
-			}
-		}, 
+	// 	watch: {
+	// 		list () {
+	// 			console.log(this.list)
+	// 		}
+    // }, 
+    methods: {
+      handleCityClick (city) {
+        this.changeCity(city)
+        this.$router.push('/')
+      },
+      ...mapMutations(['changeCity'])
+    },
 		computed: {
 			...mapState(['city'])
 		},
-		mounted() {
-			// this.scroll = new BScroll(this.$refs.wrapper, {
-			// 	probeType: 3
-			// })
+		mounted () {
+			this.scroll = new BScroll(this.$refs.wrapper)
+		},
+		//缓存 的时候better-scroll不能很好地滑动，要重新激活一下 beter-scroll的坑
+		activated (){
+			this.scroll && this.scroll.refresh()
 		}
 	}
 </script>
@@ -65,6 +74,7 @@ import BScroll from 'better-scroll'
 <style lang="stylus" scoped>
  @import '../../assets/styles/common/varibles.styl'
 .list
+  overflow: hidden
 	.area
 		.title
 			line-height: .54rem

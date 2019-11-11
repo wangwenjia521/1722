@@ -2,7 +2,7 @@
 	<div class="main">
 		<city-header></city-header>
 		<city-search></city-search>
-		<city-list :list ="list" :hotcity="hotcity"></city-list>
+		<city-list :list ="list" :hotcity="hotcity" class="list" ref="list"></city-list>
 	</div>
 </template>
 
@@ -55,4 +55,6 @@
 		bottom: 0
 		display:  flex
 		flex-direction: column
+		.list
+			flex: 1
 </style>

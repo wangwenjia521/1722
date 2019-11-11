@@ -29,6 +29,11 @@
 				sights: []
 			}
 		},
+		watch: {
+			city () {
+				this.getIndexData()
+			}
+		},
 		computed: {
 			...mapState(['city'])
 		},
@@ -44,7 +49,7 @@
 					res.data.sliders && (this.sliders = res.data.sliders)
 					res.data.icons && (this.icons = res.data.icons)
 					res.data.list &&(this.sights = res.data.list)
-					res.data.city &&(this.changeCity(res.data.city))
+					//res.data.city &&(this.changeCity(res.data.city))
 				} else {
 					this.handleDataErr()
 				}
