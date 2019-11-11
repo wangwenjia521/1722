@@ -4,7 +4,7 @@
   	<transition name="fade">
   		<div v-show="isLoading" class="loading">正在加载</div>
   	</transition>
-    <div class="item" v-for="item in sights" :key="item.id">
+    <div class="item" v-for="item in lists" :key="item.id">
     	<img v-lazy="item.imgUrl" class="item-img"/>
     	<div class="item-content">
     		<p class="item-title">{{item.title}}</p>
@@ -32,7 +32,8 @@
 		data (){
 			return {
 				isLoading: false,
-				moreSights: []
+				moreSights: [],
+				pageNum: 1
 			}
 		},
 		watch:{
@@ -43,8 +44,10 @@
 			}
 		},
 		computed:{
+				...mapState(['city']),
 			lists () {
 				return this.sights.concat(this.moreSights)
+
 			}
 		},
 		methods: {
@@ -58,7 +61,7 @@
 					this.scroller.on('scrollEnd', this.handleScrollEnd.bind(this))
 				},
 				handleScroll (e) {
-					if(e.y > 50 && !this.isLoading) {
+					if(e.y > 40 && !this.isLoading) {
 						this.getListInfo()
 						this.isLoading = true
 					}	
@@ -67,7 +70,7 @@
 						this.isLoading =  false
 				},
 				getListInfo () {
-					axios.get('/api/moreSight.json?city=' + this.city).then(this.handleGetMoreSightSucc.bind(this))
+					axios.get('/api/moreSight.json?city='+ this.city + '&page=' + this.pageNum).then(this.handleGetMoreSightSucc.bind(this))
 					.catch(this.handleGetMoreSightErr.bind(this))
 				},
 				handleGetMoreSightSucc(res) {
@@ -75,6 +78,7 @@
 					if(res.data) {
 						if(res.data.list) {
 							this.moreSights = this.moreSights.concat(res.data.list)
+							this.pageNum += 1
 							
 						}
 					}else {

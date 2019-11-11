@@ -19,7 +19,6 @@ Vue.config.productionTip = false
 import '@/assets/styles/base/iconfont/iconfont.css'
 Fastclik.attach(document.body)
 //懒加载
-Vue.use(VueLazyload)
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: 'http://img1.qunarzz.com/sight/p0/1409/19/adca619faaab0898245dc4ec482b5722.jpg_140x140_80f63803.jpg',
