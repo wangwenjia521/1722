@@ -32,6 +32,7 @@
 		data (){
 			return {
 				isLoading: false,
+				isFeching: false,
 				moreSights: [],
 				pageNum: 1
 			}
@@ -70,10 +71,14 @@
 						this.isLoading =  false
 				},
 				getListInfo () {
-					axios.get('/api/moreSight.json?city='+ this.city + '&page=' + this.pageNum).then(this.handleGetMoreSightSucc.bind(this))
-					.catch(this.handleGetMoreSightErr.bind(this))
+					if(!this.isFeching) {
+						this.isFeching = true
+						axios.get('/api/moreSight.json?city='+ this.city + '&page=' + this.pageNum).then(this.handleGetMoreSightSucc.bind(this))
+											.catch(this.handleGetMoreSightErr.bind(this))
+					}
+					
 				},
-				handleGetMoreSightSucc(res) {
+				handleGetMoreSightSucc(res) {		
 					res && (res = res.data)
 					if(res.data) {
 						if(res.data.list) {
@@ -81,11 +86,13 @@
 							this.pageNum += 1
 							
 						}
+						this.isFeching = false
 					}else {
 							this.handleGetMoreSightErr()
 					}
 				},
 				handleGetMoreSightErr (err) {
+					this.isFeching = false
 					console.log(err)
 				}
 				

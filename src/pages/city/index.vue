@@ -1,8 +1,9 @@
 <template>
 	<div class="main">
 		<city-header></city-header>
-		<city-search></city-search>
+		<city-search :list="list"></city-search>
 		<city-list :list ="list" :hotcity="hotcity" class="list" ref="list"></city-list>
+		<side-bar></side-bar>
 	</div>
 </template>
 
@@ -11,12 +12,14 @@
 	import CityHeader from './header'
 	import CitySearch from  './search'
 	import CityList from './list'
+	import SideBar from './sidebar'
 	export default {
 		name: 'city',
 		components: {
 			CityHeader,
 			CitySearch,
-			CityList
+			CityList,
+			SideBar
 		},
 		data () {
 			return {
