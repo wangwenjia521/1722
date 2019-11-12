@@ -24,10 +24,10 @@
 			</div>
 		</div>
 		<!-- 城市列表 -->
-		<div class="area" v-for="(value, key) in list" :key="key" >
+		<div class="area" v-for="(value, key) in list" :key="key" :ref="key" >
 			<div class="title border-topbottom">{{key}}</div>
 			<div class="content" >
-				<div class="content-item border-bottom" v-for="item in value" :key="item.id">
+				<div class="content-item border-bottom" v-for="item in value" :key="item.id" >
 					<div class="button-text"  @click="handleCityClick(item.name)">
 						{{item.name}}
 					</div>
@@ -56,7 +56,10 @@ import BScroll from 'better-scroll'
         this.changeCity(city)
         this.$router.push('/')
       },
-      ...mapMutations(['changeCity'])
+	  ...mapMutations(['changeCity']),
+	  scrollToIndex(item) {
+		this.scroll.scrollToElement(this.$refs[item][0])
+	  }
     },
 		computed: {
 			...mapState(['city'])

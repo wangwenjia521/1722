@@ -3,7 +3,7 @@
 		<city-header></city-header>
 		<city-search :list="list"></city-search>
 		<city-list :list ="list" :hotcity="hotcity" class="list" ref="list"></city-list>
-		<side-bar></side-bar>
+		<side-bar :list="list"  @letterChange="handleLetterChange"></side-bar>
 	</div>
 </template>
 
@@ -41,6 +41,9 @@
 			},
 			handleGetListErr (err) {
 				console.log(err)
+			},
+			handleLetterChange (item) {
+				this.$refs.list.scrollToIndex(item)
 			}
 		},
 		created() {

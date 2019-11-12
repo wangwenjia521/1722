@@ -1,15 +1,42 @@
 <template>
     <div class="sidebar">
-       <div>A</div>
-       <div>A</div>
-        <div>A</div>
-       <div>A</div>
-       <div>A</div>
+        <div class="sidebar-list" ref="list">
+            <div class="sidebar-item"
+            v-for="(item, index) in alphabet" :key="index" 
+            @touchstart="handleTouchStart(item)"
+            @touchmove="handleTouchMove">
+            {{item}}
+        </div>
+        </div>
     </div>
 </template>
 <script>
 export default {
-    name: 'side-bar'
+    name: 'side-bar',
+    props: {
+        list: Object
+    },
+    computed: {
+        alphabet () {
+            const arr = []
+            for(let i in this.list) {
+                arr.push(i)
+            }
+            return arr
+        },
+        areaTop () {
+            return this.$refs.list.offsetTop + 81
+        }
+    },
+    methods: {
+        handleTouchStart (item) {
+            this.$emit('letterChange', item)
+        },
+        handleTouchMove (e) {
+            console.log(Math.floor((e.touches[0].clientY -this.areaTop) / 20))
+        }
+    }
+
 }
 </script>
 <style lang="stylus" scoped>
@@ -20,5 +47,16 @@ export default {
     top: 1.62rem
     bottom: 0
     width: .4rem
-    background: red
+    .sidebar-list
+        width: 100%
+        position: absolute 
+        top: 40%
+        transform: translateY(-50%)
+        background: red
+        .sidebar-item
+            width: 100%
+            text-align: center
+            line-height: .4rem
+            color: #666
+
 </style>
