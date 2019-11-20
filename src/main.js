@@ -25,6 +25,7 @@ Vue.use(VueLazyload, {
   loading: 'http://img1.qunarzz.com/sight/p0/1409/19/adca619faaab0898245dc4ec482b5722.jpg_140x140_80f63803.jpg',
   attempt: 1
 })
+import 'babel-polyfill'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

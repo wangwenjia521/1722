@@ -20,7 +20,8 @@ export default new Router({
     {
       path:'/detail/:sightId',
       name: 'Detail',
-      component: Detail
+      component: Detail,
+      props: true
     }
   ]
 })

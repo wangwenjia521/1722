@@ -30,11 +30,13 @@ export default {
         }
     },
     methods: {
+        //两个兄弟组件之间传值，用发布订阅
         handleTouchStart (item) {
             this.$emit('letterChange', item)
         },
         handleTouchMove (e) {
-            console.log(Math.floor((e.touches[0].clientY -this.areaTop) / 20))
+            const index = Math.floor((e.touches[0].clientY -this.areaTop) / 20)
+            this.$emit('letterChange',this.alphabet[index])
         }
     }
 

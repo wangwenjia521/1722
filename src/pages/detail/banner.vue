@@ -5,7 +5,11 @@
 </template>
 <script>
 export default {
-    name: 'banner'
+    name: 'banner',
+    props: {
+        bannerImg: String,
+        listImg: Array
+    }
 }
 </script>
 <style lang="stylus" scoped>
