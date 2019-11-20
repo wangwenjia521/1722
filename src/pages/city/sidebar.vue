@@ -17,6 +17,7 @@ export default {
         list: Object
     },
     computed: {
+        //字母表
         alphabet () {
             const arr = []
             for(let i in this.list) {
@@ -50,8 +51,7 @@ export default {
     .sidebar-list
         width: 100%
         position: absolute 
-        top: 40%
-        transform: translateY(-50%)
+        top: 30%
         background: red
         .sidebar-item
             width: 100%

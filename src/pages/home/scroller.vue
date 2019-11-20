@@ -4,17 +4,19 @@
   	<transition name="fade">
   		<div v-show="isLoading" class="loading">正在加载</div>
   	</transition>
-    <div class="item" v-for="item in lists" :key="item.id">
-    	<img v-lazy="item.imgUrl" class="item-img"/>
-    	<div class="item-content">
-    		<p class="item-title">{{item.title}}</p>
-    		<p class="item-desc">{{item.desc}}</p>
-    		 <p class="item-price">
-    		 	<span class="price-tag">&yen;</span>
-    		 	{{item.price}}
-    		 	<span class="price-start">起</span>
-    		 </p>
-    	</div>
+    <div>
+		<router-link  v-for="item in lists" :key="item.id"  :to="'/detail/'+item.id" class="item" tag="div">
+			<img v-lazy="item.imgUrl" class="item-img"/>
+			<div class="item-content">
+				<p class="item-title">{{item.title}}</p>
+				<p class="item-desc">{{item.desc}}</p>
+				<p class="item-price">
+					<span class="price-tag">&yen;</span>
+					{{item.price}}
+					<span class="price-start">起</span>
+				</p>
+			</div>
+		</router-link>
     </div>
   </div>
 </div>
